@@ -1,17 +1,30 @@
 const mergeSortedArrays = (a1, a2) => {
-  if (a1 && !a2) return a1;
-  if (a2 && !a1) return a2;
+  if (a1.length === 0) return a2;
+  if (a2.length === 0) return a1;
 
-  for (let i = 0; i < a1.length; i++) {
-    for (let j = 0; j < a2.length; j++) {
-      if (a2[j] <= a1[i]) {
-        a1.splice(i, 0, a2[j]);
-        continue;
-      }
+  let merged = [];
+
+  let a1Item = a1[0];
+  let a2Item = a2[0];
+
+  let i = 0;
+  let j = 0;
+  while (a1Item || a2Item) {
+    if (itemCheck(a1Item, a2Item)) {
+      merged.push(a1Item);
+      a1Item = a1[i];
+      i++;
+    } else {
+      merged.push(a2Item);
+      a2Item = a2[j];
+      j++;
     }
   }
+  return merged;
+};
 
-  return a1;
+const itemCheck = (item1, item2) => {
+  return !item2 || item1 < item2;
 };
 
 const a1 = [0, 3, 4, 31];
