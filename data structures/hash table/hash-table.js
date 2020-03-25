@@ -61,7 +61,21 @@ class HashTable {
     let index = this.computeHash(key, this.buckets.length);
     if (!this.buckets[index]) return null;
 
-    return this.buckets[index].find(k => k[0] === key)[1];
+    try {
+      return this.buckets[index].find(k => k[0] === key)[1];
+    } catch (err) {
+      console.error('Missing key.');
+    }
+  }
+
+  keys() {
+    let keys = [];
+    for (let i = 0; i < this.buckets.length; i++) {
+      if (this.buckets[i]) {
+        keys.push(this.buckets[i][0][0]);
+      }
+    }
+    return keys;
   }
 }
 
@@ -69,10 +83,12 @@ let ht = new HashTable();
 ht.put('age', 25);
 ht.put('test', 'idk');
 ht.put('ok', 55);
-ht.put('yes', 'hello');
+ht.put('yes', 'testing');
 ht.put('yeee', 'yeee');
 ht.put('ok', 72);
 ht.put('55', '102');
+console.log(ht.keys());
 
 console.log('value at key "ok":', ht.get('ok'));
+console.log('value at key "yes": ', ht.get('yes'));
 console.log('table size:', ht.buckets.length);
