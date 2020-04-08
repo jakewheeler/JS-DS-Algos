@@ -79,6 +79,23 @@ class LinkedList {
     }
   }
 
+  reverse = () => {
+    if (!this.head.next) {
+      return this.head;
+    }
+    let first = head;
+    this.tail = this.head;
+    let second = first.next;
+    while (second) {
+      let third = second.next;
+      second.next = first;
+      first = second;
+      second = third;
+    }
+    this.head.next = null;
+    this.head = first;
+  };
+
   // print each node in the the linked list
   print() {
     let print = [];
@@ -98,9 +115,10 @@ ll.append(3);
 ll.append(5);
 ll.prepend(1);
 ll.prepend(2);
-ll.prepend(5);
+ll.prepend(88);
 ll.delete(1);
 ll.append(19);
 ll.insertAfter(0, 17);
 ll.delete(19);
+// ll.reverse();
 ll.print();
