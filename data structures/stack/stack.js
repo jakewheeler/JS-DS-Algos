@@ -70,6 +70,33 @@ class LinkedListStack {
   };
 }
 
+class ArrayStack {
+  constructor() {
+    this.stack = [];
+  }
+
+  push = (val) => {
+    this.stack.push(val);
+  };
+
+  peek = () => {
+    return this.stack[this.stack.length - 1];
+  };
+
+  pop = () => {
+    return this.stack.pop();
+  };
+
+  isEmpty = () => this.stack.length <= 0;
+
+  print = () => {
+    this.stack.forEach((el) => {
+      console.log(el);
+    });
+  };
+}
+
+console.log('Linked list stack');
 let llstack = new LinkedListStack();
 
 // add to top of stack
@@ -96,3 +123,16 @@ llstack.print();
 if (llstack.peek()) console.log('peek:', llstack.peek().value);
 
 console.log('isEmpty:', llstack.isEmpty());
+
+console.log();
+console.log('Array stack:');
+let arrayStack = new ArrayStack();
+arrayStack.push(1);
+arrayStack.push(2);
+arrayStack.push(3);
+
+console.log('AS peek:', arrayStack.peek());
+console.log('AS pop:', arrayStack.pop());
+
+arrayStack.push(33);
+arrayStack.print();

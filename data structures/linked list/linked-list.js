@@ -110,7 +110,6 @@ class LinkedList {
   }
 }
 
-let ll = new LinkedList(6);
 ll.append(3);
 ll.append(5);
 ll.prepend(1);

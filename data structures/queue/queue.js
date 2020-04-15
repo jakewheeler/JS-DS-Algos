@@ -1,37 +1,34 @@
 class Queue {
   constructor() {
-    this.buckets = [];
+    this.q = new LinkedList(2);
   }
 
-  add(data) {
-    this.buckets.push(data);
-    return data;
+  enqueue(data) {
+    this.q.append(data);
   }
 
-  remove() {
-    let data = this.buckets.shift();
-    return data;
+  dequeue() {
+    this.q.
   }
 
   isEmpty() {
-    return this.buckets.length === 0;
+    return this.q.head === null;
   }
 
   peek() {
-    if (this.buckets[0]) return this.buckets[0];
-    return null;
+    return this.q.head.data;
   }
 
   print() {
-    console.log('front:', this.buckets, ':back');
+    this.q.print();
   }
 }
 
 let q = new Queue();
-q.add(3);
-q.add(2);
-q.add(1);
-q.remove();
-q.add(16);
+q.enqueue(3);
+q.enqueue(2);
+q.enqueue(1);
+q.dequeue();
+q.enqueue(16);
 console.log(q.peek());
 q.print();
