@@ -49,7 +49,27 @@ class BST {
     // remove
   };
 
-  lookup = (value) => {};
+  lookup = (value) => {
+    // tree is empty
+    if (!this.root) return null;
+
+    let currentNode = this.root;
+    while (true) {
+      if (currentNode.value === value) {
+        return currentNode;
+      } else if (value < currentNode.value) {
+        if (!currentNode.left) {
+          return null;
+        }
+        currentNode = currentNode.left;
+      } else {
+        if (!currentNode.right) {
+          return null;
+        }
+        currentNode = currentNode.right;
+      }
+    }
+  };
 }
 
 const tree = new BST();
@@ -60,3 +80,6 @@ tree.insert(20);
 tree.insert(170);
 tree.insert(1);
 console.log(JSON.stringify(traverse(tree.root)));
+
+let node = tree.lookup(9);
+console.log(node);
