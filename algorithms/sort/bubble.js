@@ -5,23 +5,16 @@ const bubbleSort = (arr) => {
     arr[index2] = temp;
   };
 
-  let swapped = false;
-
   for (let i = 0; i < arr.length; i++) {
-    let j = i + 1;
-    if (arr[i] > arr[j]) {
-      swap(i, j);
-      swapped = true;
-    }
-
-    if (j === arr.length && swapped) {
-      swapped = false;
-      i = -1;
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[i] > arr[j]) {
+        swap(i, j);
+      }
     }
   }
 
   return arr;
 };
 
-let sortedList = bubbleSort([7, 5, 8, 1, 2, 4]);
+let sortedList = bubbleSort([7, 5, 8, 1, 2, 4, 19, 33, 55, 17, 63, 12]);
 console.log(sortedList);
