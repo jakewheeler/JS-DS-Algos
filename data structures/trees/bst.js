@@ -184,6 +184,55 @@ class BST {
 
     return this.bfsR(queue, list);
   };
+
+  dfsInorder = () => {
+    const traverseInorder = (node, list) => {
+      if (node.left) {
+        traverseInorder(node.left, list);
+      }
+      list.push(node.value);
+
+      if (node.right) {
+        traverseInorder(node.right, list);
+      }
+
+      return list;
+    };
+    return traverseInorder(this.root, []);
+  };
+  dfsPostorder = () => {
+    const traversePostorder = (node, list) => {
+      if (node.left) {
+        traversePostorder(node.left, list);
+      }
+
+      if (node.right) {
+        traversePostorder(node.right, list);
+      }
+
+      list.push(node.value);
+
+      return list;
+    };
+    return traversePostorder(this.root, []);
+  };
+  dfsPreorder = () => {
+    const traversePreorder = (node, list) => {
+      list.push(node.value);
+
+      if (node.left) {
+        traversePreorder(node.left, list);
+      }
+
+      if (node.right) {
+        traversePreorder(node.right, list);
+      }
+
+      return list;
+    };
+
+    return traversePreorder(this.root, []);
+  };
 }
 
 const tree = new BST();
@@ -195,10 +244,14 @@ tree.insert(170);
 tree.insert(15);
 tree.insert(1);
 
-let bfs = tree.bfs();
-console.log(bfs);
-let bfsR = tree.bfsR([tree.root], []);
-console.log(bfsR);
+// let bfs = tree.bfs();
+// console.log(bfs);
+// let bfsR = tree.bfsR([tree.root], []);
+// console.log(bfsR);
+
+console.log('in order:', tree.dfsInorder());
+console.log('pre order:', tree.dfsPreorder());
+console.log('Post order:', tree.dfsPostorder());
 
 // let node = tree.lookup(9);
 // console.log(node);
