@@ -146,20 +146,59 @@ class BST {
       }
     }
   };
+
+  bfs = () => {
+    let currentNode = this.root;
+    let list = [];
+    let queue = [];
+
+    queue.push(currentNode);
+
+    while (queue.length) {
+      currentNode = queue.shift();
+      list.push(currentNode.value);
+      if (currentNode.left) {
+        queue.push(currentNode.left);
+      }
+      if (currentNode.right) {
+        queue.push(currentNode.right);
+      }
+    }
+
+    return list;
+  };
+
+  bfsR = (queue, list) => {
+    if (!queue.length) {
+      return list;
+    }
+    let currentNode = queue.shift();
+    list.push(currentNode.value);
+
+    if (currentNode.left) {
+      queue.push(currentNode.left);
+    }
+    if (currentNode.right) {
+      queue.push(currentNode.right);
+    }
+
+    return this.bfsR(queue, list);
+  };
 }
 
 const tree = new BST();
-tree.insert(98);
-tree.insert(46);
-tree.insert(19);
-tree.insert(14);
-tree.insert(88);
-tree.insert(89);
-tree.insert(55);
-tree.insert(69);
-tree.insert(99);
-// tree.remove(89);
-console.log(JSON.stringify(traverse(tree.root)));
+tree.insert(9);
+tree.insert(4);
+tree.insert(6);
+tree.insert(20);
+tree.insert(170);
+tree.insert(15);
+tree.insert(1);
+
+let bfs = tree.bfs();
+console.log(bfs);
+let bfsR = tree.bfsR([tree.root], []);
+console.log(bfsR);
 
 // let node = tree.lookup(9);
 // console.log(node);
