@@ -147,6 +147,30 @@ class BST {
     }
   };
 
+  isValidBst = () => {
+    const checkValid = (node, min, max) => {
+      if (!node) {
+        return true;
+      }
+      let value = node.value;
+
+      if (value <= min || value >= max) {
+        return false;
+      }
+
+      if (!checkValid(node.right, value, max)) return false;
+      if (!checkValid(node.left, min, value)) return false;
+
+      return true;
+    };
+
+    return checkValid(
+      this.root,
+      Number.MIN_SAFE_INTEGER,
+      Number.MAX_SAFE_INTEGER
+    );
+  };
+
   bfs = () => {
     let currentNode = this.root;
     let list = [];
@@ -252,6 +276,7 @@ tree.insert(1);
 console.log('in order:', tree.dfsInorder());
 console.log('pre order:', tree.dfsPreorder());
 console.log('Post order:', tree.dfsPostorder());
+console.log('isValidBst:', tree.isValidBst());
 
 // let node = tree.lookup(9);
 // console.log(node);
