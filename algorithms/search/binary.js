@@ -1,9 +1,10 @@
 const binarySearch = (arr, key) => {
   let min = 0;
   let max = arr.length - 1;
+  let middle;
 
   while (min <= max) {
-    let middle = Math.floor((min + max) / 2);
+    middle = Math.floor((min + max) / 2);
     if (arr[middle] === key) {
       return middle;
     } else if (arr[middle] < key) {
