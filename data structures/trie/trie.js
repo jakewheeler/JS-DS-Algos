@@ -1,106 +1,100 @@
-class tNode {
-  constructor(char) {
-    this.char = char;
+class TrieNode {
+  constructor(key) {
+    this.key = key;
     this.parent = null;
     this.children = {};
     this.isWord = false;
   }
 
   getWord() {
-    let node = this;
     let output = [];
+    let currentNode = this;
 
-    while (node) {
-      output.unshift(node.char);
-      node = node.parent;
+    while (currentNode) {
+      output.unshift(currentNode.key);
+      currentNode = currentNode.parent;
     }
-    return output.join('');
+    let word = output.join('');
+    return word; //return the full word
   }
 }
 
 class Trie {
   constructor() {
-    this.root = new tNode(null);
+    // root has no key
+    this.root = new TrieNode(null);
   }
 
-  addWord(word) {
-    // split word into array of chars
+  add(word) {
+    let currentNode = this.root;
     let chars = [...word];
 
-    let currentNode = this.root;
-
-    // check children to see if character exists
+    // for each character in the word, create a node
     chars.forEach((ch, i) => {
-      // if node does not exist
+      // no node exists yet for character, create it
       if (!currentNode.children[ch]) {
-        currentNode.children[ch] = new tNode(ch);
-        currentNode.children[ch].parent = currentNode;
+        currentNode.children[ch] = new TrieNode(ch); // create node for char
+        currentNode.children[ch].parent = currentNode; // set the parent node for char)
       }
 
+      // move to next node
       currentNode = currentNode.children[ch];
 
-      // check length to see if it's a word
       if (i === chars.length - 1) {
         currentNode.isWord = true;
       }
     });
   }
 
-  findWord(word) {
-    // split word into array of chars
+  // return true if word exists
+  find(word) {
     let chars = [...word];
-
-    // start at root
     let currentNode = this.root;
 
-    // loop through each char in the word
-    chars.forEach((ch) => {
-      // if the char does not exist, we have no word
-      if (currentNode.children[ch]) {
-        currentNode = currentNode.children[ch];
-      } else {
-        return false;
+    for (let i = 0; i < chars.length; i++) {
+      if (!currentNode.children[chars[i]]) {
+        return false; // node doesn't exist, no word
       }
-    });
+      currentNode = currentNode.children[chars[i]];
+    }
 
     return currentNode.isWord;
   }
 
-  // get list of words in trie with specified prefix
-  findByPrefix(prefix) {
+  getAllByPrefix(prefix) {
     let chars = [...prefix];
     let currentNode = this.root;
     let output = [];
 
-    chars.forEach((ch) => {
-      if (currentNode.children[ch]) {
-        currentNode = currentNode.children[ch];
-      } else {
-        return output; // just return an empty list if the node doesn't exist
+    for (let i = 0; i < chars.length; i++) {
+      let ch = chars[i];
+      if (!currentNode.children[ch]) {
+        return output; // nothing to return
       }
-    });
-
+      currentNode = currentNode.children[ch]; // move to next node
+    }
+    // at the very last node now...
     findAllWords(currentNode, output);
 
     return output;
   }
 }
 
-function findAllWords(node, arr) {
-  // base case
+// last node in prefix, output will hold strings
+function findAllWords(node, output) {
   if (node.isWord) {
-    arr.unshift(node.getWord());
+    output.push(node.getWord());
   }
-
-  Object.keys(node.children).forEach((child) => {
-    findAllWords(node.children[child], arr);
-  });
+  let children = Object.keys(node.children);
+  for (let i = 0; i < children.length; i++) {
+    findAllWords(node.children[children[i]], output);
+  }
 }
 
-let rootNode = new Trie();
-rootNode.addWord('cat');
-rootNode.addWord('cars');
-rootNode.addWord('concrete');
-rootNode.addWord('pickle');
-rootNode.addWord('bird');
-console.log(rootNode.findByPrefix('co'));
+let trie = new Trie();
+trie.add('cat');
+trie.add('canada');
+trie.add('corn');
+
+console.log(trie.find('canada'));
+console.log(trie.getAllByPrefix('co'));
